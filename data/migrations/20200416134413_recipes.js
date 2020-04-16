@@ -1,14 +1,13 @@
-
 exports.up = function(knex) {
     return(
         knex.schema
           .createTable("recipes", tbl => {
-              tbl.string("id", 255).primary()
+              tbl.increments("id", 255).primary()
               tbl.string("recipe_name", 255).notNullable().unique()
               tbl.string("recipe_author", 255)
           })
           .createTable("steps", tbl => {
-              tbl.string("id", 255).primary()
+              tbl.increments("id", 255).primary()
               tbl.string("step_text", 255).notNullable()
               tbl.string("step_number", 255).notNullable()
               tbl
@@ -20,14 +19,14 @@ exports.up = function(knex) {
                   .onUpdate("CASCADE")
           })
           .createTable("ingredients", tbl => {
-              tbl.string("id", 255).primary()
+              tbl.increments("id", 255).primary()
               tbl.string("ingredient_name", 255).notNullable().unique()
           })
           .createTable("recipe_ingredients", tbl => {
-              tbl.string("id", 255).primary()
+              tbl.increments("id", 255).primary()
               tbl.decimal("ingredient_amount").notNullable()
               tbl
-                  .string("receipe_id", 255)
+                  .string("recipe_id", 255)
                   .notNullable()
                   .references("id")
                   .inTable("recipes")
@@ -51,4 +50,3 @@ exports.up = function(knex) {
           .dropTableIfExists("steps")
           .dropTableIfExists("recipes")
   };
-  
